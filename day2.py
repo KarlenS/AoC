@@ -1,7 +1,8 @@
 import random
 import itertools
+from typing import List
 
-def Intcode_computer(code: list) -> list:
+def Intcode_computer(code: List) -> List:
 
     for i in range(0,len(code),4):
 
@@ -20,7 +21,7 @@ def Intcode_computer(code: list) -> list:
     return code
 
 
-def run_computer(instr: list, noun: int, verb: int) -> int:
+def run_computer(instr: List, noun: int, verb: int) -> int:
 
     instr[1],instr[2] = noun, verb
 
