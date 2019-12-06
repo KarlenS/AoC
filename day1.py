@@ -35,7 +35,7 @@ def main():
     # Main code #
     #############
 
-    filename = 'day1.dat'
+    filename = 'data/day1.dat'
 
     module_total = 0
     total = 0

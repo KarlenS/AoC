@@ -40,7 +40,7 @@ def main():
 
     tests()
 
-    filename = 'day2.dat'
+    filename = 'data/day2.dat'
 
     with open(filename) as f:
         data = f.read().strip().split(',')

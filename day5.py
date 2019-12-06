@@ -179,7 +179,7 @@ def tests():
 
 def main():
 
-    filename = 'day5.dat'
+    filename = 'data/day5.dat'
     with open(filename) as f:
         data = f.read().strip().split(',')
         data = [int(x) for x in data]

@@ -159,7 +159,7 @@ def main():
 
     tests()
 
-    paths = read_paths('day3.dat')
+    paths = read_paths('data/day3.dat')
     _, dist = closest_intersection_dist(paths[0],paths[1])
     print(f'closest intersection is {dist} units away.')
 
