@@ -1,23 +1,50 @@
 from typing import List, Dict
 
-def count_min_transfers(orbits: Dict, orbits_rev: Dict) -> int:
+def count_min_transfers(orbits: Dict) -> int:
 
     n_transfers = 0
 
-    pos = orbits['YOU']
-    end = orbits['SAN']
+    you = orbits['YOU']
+    santa = orbits['SAN']
+
+    you_path = []
+    santa_path = []
 
     while True:
-        if pos == end:
+
+        you = orbits[you]
+        if you == 'COM':
             break
-        try:
-            pos = orbits[pos]
-        except KeyError:
-            pos = orbits_rev[pos]
+        you_path.append(you)
 
-        n_transfers += 1
 
-    return n_transfers
+    while True:
+        santa = orbits[santa]
+        if santa == 'COM':
+            break
+        santa_path.append(santa)
+
+
+    for pos in you_path:
+        if pos in santa_path:
+            break
+
+    slength = 0
+    ylength = 0
+    you = orbits['YOU']
+    santa = orbits['SAN']
+    while True:
+        santa = orbits[santa]
+        if santa == pos:
+            break
+        slength +=1
+    while True:
+        you = orbits[you]
+        if you == pos:
+            break
+        ylength +=1
+
+    return slength + ylength + 2
 
 def count_orbits(orbits: Dict) -> int:
 
@@ -70,12 +97,9 @@ def tests():
     orbits2 = build_orbits(['COM)B','B)C','C)D','D)E','E)F',
                             'B)G','G)H','D)I','E)J','J)K','K)L',
                             'K)YOU','I)SAN'])
-    orbits2_rev = build_orbits(['COM)B','B)C','C)D','D)E','E)F',
-                            'B)G','G)H','D)I','E)J','J)K','K)L',
-                            'K)YOU','I)SAN'],reverse=True)
 
     assert(count_orbits(orbits1) == 42)
-    assert(count_min_transfers(orbits2,orbits2_rev) == 4)
+    assert(count_min_transfers(orbits2) == 4)
 
 
 def main():
@@ -84,12 +108,10 @@ def main():
 
     data = read_data('data/day6.dat')
     orbits = build_orbits(data)
-    orbits_rev = build_orbits(data,reverse=True)
-    print()
 
     n_orbits = count_orbits(orbits)
     print(f'Number of orbits: {n_orbits}')
-    n_transfers = count_min_transfers(orbits,orbits_rev)
+    n_transfers = count_min_transfers(orbits)
     print(f'Number of transfers: {n_transfers}')
 
 
