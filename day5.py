@@ -1,9 +1,11 @@
 import itertools
 from typing import List
 
-def Intcode_computer(code: List, input_val = 1) -> List:
+def Intcode_computer(code: List, input_val = 1, first_input = None,
+                     first = True) -> List:
 
     i = 0
+    isfirst = first
     while i < len(code):
     #for i in range(0,len(code),4):
 
@@ -15,7 +17,7 @@ def Intcode_computer(code: List, input_val = 1) -> List:
 
         if opcode == 99:
             #print(f"hit 99 @ {i}")
-            return code
+            return opcode
 
         elif opcode == 1:
 
@@ -61,13 +63,19 @@ def Intcode_computer(code: List, input_val = 1) -> List:
 
         elif opcode == 3:
 
+            if isfirst:
+                inp = first_input
+                isfirst = False
+            else:
+                inp = input_val
+
             try:
                 if int(par_modes[-1]):
-                    code[i+1] = input_val
+                    code[i+1] = inp
                 else:
-                    code[code[i+1]] = input_val
+                    code[code[i+1]] = inp
             except IndexError:
-                code[code[i+1]] = input_val
+                code[code[i+1]] = inp
 
             i += 2
 
@@ -76,8 +84,10 @@ def Intcode_computer(code: List, input_val = 1) -> List:
                 par1 = code[i+1] if int(par_modes[-1]) else code[code[i+1]]
             except IndexError:
                 par1 = code[code[i+1]]
-            print(par1)
+
+            #print(par1)
             i += 2
+            return par1
 
         elif opcode == 5:
             try:
@@ -158,8 +168,7 @@ def Intcode_computer(code: List, input_val = 1) -> List:
         else:
             raise ValueError(f'Computer failed! What is opcode {opcode_str}?!')
 
-
-    return code
+    #return opcode
 
 def tests():
 
